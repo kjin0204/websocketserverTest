@@ -19,6 +19,10 @@ namespace websocketserverTest
             while (true)
             {
                 var context = await server.GetContextAsync();
+
+                // CORS 설정 (모든 Origin 허용)
+                context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+
                 if (context.Request.IsWebSocketRequest && context.Request.Url.AbsolutePath == "/ws")
                 {
                     // HttpListenerWebSocketContext 객체를 얻고 AcceptWebSocketAsync() 호출
