@@ -1,0 +1,25 @@
+﻿<!-- Index.razor -->
+@page "/"
+@inject IJSRuntime JSRuntime 
+
+<h1>WebGL in Blazor Example</h1>
+
+<div id="webgl-container">
+    <canvas id="unityContainer" width="800" height="600"></canvas>
+</div>
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            //JavaScript Interop을 통해 WebGL 초기화 함수 호출
+            await JSRuntime.InvokeVoidAsync("initializeWebGL", "unityContainer");
+
+            
+        }
+    }
+
+
+}
+
