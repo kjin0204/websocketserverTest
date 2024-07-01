@@ -17,7 +17,7 @@ namespace websocketserverTest
             Console.WriteLine("WebSocket 서버 시작... (http://localhost:8080/) ");
 
             while (true)
-            {
+            {//
                 var context = await server.GetContextAsync();
 
                 // CORS 설정 (모든 Origin 허용)
