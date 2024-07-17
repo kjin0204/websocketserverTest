@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Net;
 using System.Net.WebSockets;
 using System.Text;
@@ -29,13 +30,25 @@ namespace websocketserverTest
                     var webSocketContext = await context.AcceptWebSocketAsync(subProtocol: null);
                     WebSocket webSocket = webSocketContext.WebSocket;
 
-                    // HTTP 헤더에서 클라이언트 ID 가져오기 (webSocketContext 사용)
-                    string clientId = webSocketContext.Headers["X-Client-Id"];
+
+                    var query = context.Request.Url.Query;
+                    var clientId = System.Web.HttpUtility.ParseQueryString(query).Get("clientId");
+
                     if (string.IsNullOrEmpty(clientId))
                     {
-                        await webSocket.CloseAsync(WebSocketCloseStatus.ProtocolError, "Client ID is required.", CancellationToken.None);
+                        await context.Response.OutputStream.WriteAsync(Encoding.UTF8.GetBytes("Client ID is required."));
+                        context.Response.Close();
                         continue;
                     }
+
+
+                    // HTTP 헤더에서 클라이언트 ID 가져오기 (webSocketContext 사용)
+                    //string clientId = webSocketContext.Headers["X-Client-Id"];
+                    //if (string.IsNullOrEmpty(clientId))
+                    //{
+                    //    await webSocket.CloseAsync(WebSocketCloseStatus.ProtocolError, "Client ID is required.", CancellationToken.None);
+                    //    continue;
+                    //}
 
 
 
@@ -67,7 +80,12 @@ namespace websocketserverTest
 
                     // 에코 기능 (클라이언트에게 메시지 다시 전송)
                     var response = Encoding.UTF8.GetBytes($"서버: {message}");
+                    byte[] asd = new byte[] { 1, 2, 3 };
+
+                    Debug.WriteLine($"[서버로그메시지] 전송전 :{message} ");
                     await webSocket.SendAsync(new ArraySegment<byte>(response), WebSocketMessageType.Text, true, CancellationToken.None);
+                    Debug.WriteLine($"[서버로그메시지] 전송완료 :{message} ");
+
                 }
             }
         }

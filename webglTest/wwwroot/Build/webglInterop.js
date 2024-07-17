@@ -1,25 +1,5 @@
-﻿/// <reference path="../build/build/build.loader.js" />
-/// <reference path="../build/build/build.loader.js" />
-// wwwroot/webgl/webglInterop.js
-
-//window.initializeWebGL = function (canvasId) {
-//    const canvas = document.getElementById(canvasId);
-//    const loaderScript = `webgl/Build.loader.js`;
-
-
-//    console.log("initializeWebGL탔다2");
-
-//    // UnityLoader를 사용하여 WebGL 애플리케이션 초기화
-//    UnityLoader.instantiate(canvas, loaderScript
-//        , {
-//            dataUrl: `webgl/Build.data.unityweb`,
-//            frameworkUrl: `webgl/Build.framework.js.unityweb`,
-//            wasmUrl: `webgl/Build.wasm.unityweb`
-//        }
-//    );
-//    console.log("initializeWebGL탔다3");
-//}
-
+﻿// 전역 변수로 unityInstance 설정
+var unityInstance = null;
 
 function unityShowBanner(msg, type) {
     function updateBannerVisibility() {
@@ -43,11 +23,11 @@ function unityShowBanner(msg, type) {
 window.initializeWebGL = function (canvasId) {
     const canvas = document.getElementById(canvasId);
     var buildUrl = "Build/Build";
-    var loaderUrl = buildUrl + "/Build.loader.js";
+    var loaderUrl = buildUrl + "/Build2.loader.js";
     var config = {
-        dataUrl: buildUrl + "/Build.data.unityweb",
-        frameworkUrl: buildUrl + "/Build.framework.js.unityweb",
-        codeUrl: buildUrl + "/Build.wasm.unityweb",
+        dataUrl: buildUrl + "/Build2.data.unityweb",
+        frameworkUrl: buildUrl + "/Build2.framework.js.unityweb",
+        codeUrl: buildUrl + "/Build2.wasm.unityweb",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
         productName: "My project",
@@ -57,20 +37,15 @@ window.initializeWebGL = function (canvasId) {
 
     var script = document.createElement("script");
     script.src = loaderUrl;
+
     script.onload = () => {
-        createUnityInstance(canvas, config
-            //, (progress) => {
-            //progressBarFull.style.width = 100 * progress + "%";}
-        
-        ).then((unityInstance) => {
-            //loadingBar.style.display = "none";
-            //fullscreenButton.onclick = () => {
-            //    unityInstance.SetFullscreen(1);
-            //};
+        createUnityInstance(canvas, config).then((instance) => {
+            unityInstance = instance;  // 전역 변수로 unityInstance 설정
         }).catch((message) => {
             alert(message);
         });
     };
+
 
     document.body.appendChild(script);
 }

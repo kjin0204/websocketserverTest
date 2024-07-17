@@ -26,7 +26,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 var provider = new FileExtensionContentTypeProvider();
-provider.Mappings[".unityweb"] = "application/octet-stream";
+provider.Mappings[".unityweb"] = "application/octet-stream"; //8비트 바이너리 배열
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")),

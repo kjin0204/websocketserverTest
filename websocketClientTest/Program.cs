@@ -13,17 +13,15 @@ namespace websocketClientTest
         {
             using (ClientWebSocket client = new ClientWebSocket())
             {
-                Uri serverUri = new Uri("ws://localhost:8080/ws"); // 서버 주소 설정
+                //Uri serverUri = new Uri("ws://localhost:8080/ws"); // 서버 주소 설정
+                Uri serverUri = new Uri("ws://localhost:8080/ws?clientID=asd&client=gfg"); // 서버 주소 설정
                 CancellationTokenSource cts = new CancellationTokenSource();
                 // HTTP 헤더에 클라이언트 ID 추가
-                client.Options.SetRequestHeader("X-Client-Id", "your_client_id"); // 실제 ID로 변경
+                //client.Options.SetRequestHeader("X-Client-Id", "your_client_id"); // 실제 ID로 변경
 
-
-                Console.WriteLine("WebSocket 서버에 연결 중...");
                 await client.ConnectAsync(serverUri, cts.Token);
-                Console.WriteLine("WebSocket 서버에 연결됨!");
 
-                _ = Task.Run(() => ReceiveMessage(client, cts)); // 메시지 수신 시작
+                Task.Run(() => ReceiveMessage(client, cts)); // 메시지 수신 시작
 
                 while (client.State == WebSocketState.Open)
                 {
