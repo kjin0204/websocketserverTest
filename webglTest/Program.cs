@@ -21,6 +21,16 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+//string aa = "DFEB";
+//ushort number = Convert.ToUInt16(aa, 16); // 16진수 문자열을 uint16으로 
+//short number1 = Convert.ToInt16(aa, 16); // 16진수 문자열을 uint16으로 
+////UInt16 aas = UInt16.Parse(aa);
+////Int16 aas1 = Int16.Parse(aa);
+
+//var dddd = Convert.ToInt16("8000", 16);
+
+//var dddd1 = Convert.ToUInt16("8001", 16);
+
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();

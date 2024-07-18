@@ -15,12 +15,8 @@
     <link rel="icon" type="image/png" href="favicon.png"/>
     <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
 
-    <script src="~/build/webglinterop.js"></script>
-
-
-    @* <a href="~/build/build/websocket.jslib">~/build/build/websocket.jslib</a>
-    <a href="~/build/build/websocket.jslib.meta">~/build/build/websocket.jslib.meta</a> *@
-    @* <script src="~/build/build/websocket.js"></script> *@
+    <!--WebGL 인스턴스 webglinterop.js 참조추가 -->
+    <script src="~/webglinterop.js"></script>
 </head>
 <body>
     <component type="typeof(App)" render-mode="ServerPrerendered" />
